@@ -45,7 +45,8 @@ object TomTomSetup {
     fun cariLokasi(searchApi: Search, kueri: String, map: TomTomMap, callback: SearchResultCallback) {
         thread {
             try {
-                val options = SearchOptions(query = kueri, limit = 1)
+                val fallbackPos = map.currentLocation?.position ?: map.cameraPosition.position
+                val options = SearchOptions(query = kueri, limit = 1, geoBias = fallbackPos)
                 val result = searchApi.search(options)
                 Handler(Looper.getMainLooper()).post {
                     if (result.isSuccess()) {
@@ -77,9 +78,11 @@ object TomTomSetup {
         map: TomTomMap,
         callback: SearchResultCallback
     ) {
+        val fallbackPos = map.currentLocation?.position ?: map.cameraPosition.position
         val searchOptions = com.tomtom.sdk.search.SearchOptions(
             query = kueri,
-            limit = 10
+            limit = 10,
+            geoBias = fallbackPos
         )
 
         kotlin.concurrent.thread {

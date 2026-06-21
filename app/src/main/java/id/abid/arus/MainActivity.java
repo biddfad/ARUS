@@ -114,10 +114,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Quick Categories
-        btnKategoriSPBU.setOnClickListener(v -> prosesBanyakLokasi("SPBU terdekat", false));
-        btnKategoriRS.setOnClickListener(v -> prosesBanyakLokasi("Rumah sakit terdekat", false));
-        btnKategoriResto.setOnClickListener(v -> prosesBanyakLokasi("Restoran terdekat", false));
-        btnKategoriParkir.setOnClickListener(v -> prosesBanyakLokasi("Tempat parkir terdekat", false));
+        btnKategoriSPBU.setOnClickListener(v -> prosesBanyakLokasi("SPBU", false));
+        btnKategoriRS.setOnClickListener(v -> prosesBanyakLokasi("Rumah Sakit", false));
+        btnKategoriResto.setOnClickListener(v -> prosesBanyakLokasi("Restoran", false));
+        btnKategoriParkir.setOnClickListener(v -> prosesBanyakLokasi("Parkir", false));
     }
 
     private com.tomtom.sdk.search.Search searchApi;

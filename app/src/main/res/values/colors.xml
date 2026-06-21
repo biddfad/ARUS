@@ -2,4 +2,26 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <!-- App Brand Colors -->
+    <color name="primary_blue">#2196F3</color>
+    <color name="primary_dark">#1976D2</color>
+    
+    <!-- Category Chips -->
+    <color name="cat_spbu">#FF9800</color>
+    <color name="cat_spbu_bg">#FFF3E0</color>
+    
+    <color name="cat_rs">#E53935</color>
+    <color name="cat_rs_bg">#FFEBEE</color>
+    
+    <color name="cat_resto">#43A047</color>
+    <color name="cat_resto_bg">#E8F5E9</color>
+    
+    <color name="cat_parkir">#5E35B1</color>
+    <color name="cat_parkir_bg">#EDE7F6</color>
+    
+    <!-- UI Elements -->
+    <color name="gray_bg">#F5F5F5</color>
+    <color name="text_dark">#333333</color>
+    <color name="text_light">#888888</color>
 </resources>
