@@ -25,7 +25,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:padding="8dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@android:drawable/ic_menu_search"
+                app:tint="#888888"
+                android:layout_marginStart="8dp"/>
 
             <EditText
                 android:id="@+id/etInputPencarian"
@@ -34,17 +42,28 @@
                 android:layout_weight="1"
                 android:hint="Cari lokasi tujuan..."
                 android:background="@android:color/transparent"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:inputType="text"/>
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:inputType="text"
+                android:imeOptions="actionSearch"/>
+
+            <ImageButton
+                android:id="@+id/btnMic"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_btn_speak_now"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="#2196F3"
+                android:layout_marginEnd="4dp"/>
 
             <ImageButton
                 android:id="@+id/btnCariKetik"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@android:drawable/ic_menu_search"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_send"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="#4CAF50"/>
+                app:tint="#4CAF50"
+                android:layout_marginEnd="4dp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -81,33 +100,16 @@
             android:layout_marginBottom="16dp"
             android:background="#D0D0D0"/>
 
-        <!-- Area Asisten Suara -->
-        <LinearLayout
+        <!-- Area Status/Notifikasi -->
+        <TextView
+            android:id="@+id/tvHasilRespon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnMic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_btn_speak_now"
-                app:backgroundTint="#2196F3"
-                app:tint="#FFFFFF"
-                app:fabSize="normal"
-                app:elevation="0dp"/>
-
-            <TextView
-                android:id="@+id/tvHasilRespon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="Asisten Suara ARUS siap! Tekan Mic untuk cek jalan."
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#333333"/>
-        </LinearLayout>
+            android:text="Asisten Suara ARUS siap! Tekan ikon Mic di pencarian."
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:textAlignment="center"/>
 
         <!-- Kategori Cepat (Expanded view) -->
         <TextView

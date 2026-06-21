@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText etInputPencarian;
     private TextView tvHasilRespon;
     private TextToSpeech tts;
-    private SpeechRecognizer speechRecognizer;
     private TomTomMap tomtomMap;
 
     // MASUKKAN API KEY ASLI DI SINI
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         etInputPencarian = findViewById(R.id.etInputPencarian);
         tvHasilRespon = findViewById(R.id.tvHasilRespon);
         ImageButton btnCariKetik = findViewById(R.id.btnCariKetik);
-        FloatingActionButton btnMic = findViewById(R.id.btnMic);
+        ImageButton btnMic = findViewById(R.id.btnMic);
         FloatingActionButton btnMyLocation = findViewById(R.id.btnMyLocation);
 
         Button btnKategoriSPBU = findViewById(R.id.btnKategoriSPBU);
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             if (status == TextToSpeech.SUCCESS) tts.setLanguage(new Locale("id", "ID"));
         });
 
-        setupSpeechRecognizer();
+
 
         btnCariKetik.setOnClickListener(v -> {
             String input = etInputPencarian.getText().toString().trim();
@@ -87,8 +86,14 @@ public class MainActivity extends AppCompatActivity {
 
         btnMic.setOnClickListener(v -> {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "id-ID");
-            speechRecognizer.startListening(intent);
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Sebutkan lokasi tujuan Anda...");
+            try {
+                startActivityForResult(intent, 100);
+            } catch (Exception e) {
+                tampilkanHasil("Fitur suara tidak didukung di perangkat ini.", false);
+            }
         });
 
         btnMyLocation.setOnClickListener(v -> {
@@ -212,22 +217,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setupSpeechRecognizer() {
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
-        speechRecognizer.setRecognitionListener(new RecognitionListener() {
-            @Override public void onReadyForSpeech(Bundle p) {}
-            @Override public void onBeginningOfSpeech() {}
-            @Override public void onRmsChanged(float r) {}
-            @Override public void onBufferReceived(byte[] b) {}
-            @Override public void onEndOfSpeech() {}
-            @Override public void onError(int e) {}
-            @Override public void onResults(Bundle r) {
-                ArrayList<String> data = r.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-                if (data != null) prosesPerintah(data.get(0), true);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+            ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (results != null && !results.isEmpty()) {
+                String spokenText = results.get(0);
+                etInputPencarian.setText(spokenText);
+                tutupKeyboard();
+                prosesPerintah(spokenText, true);
             }
-            @Override public void onPartialResults(Bundle p) {}
-            @Override public void onEvent(int e, Bundle b) {}
-        });
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void tutupKeyboard() {
@@ -246,9 +247,6 @@ public class MainActivity extends AppCompatActivity {
         if (tts != null) {
             tts.stop();
             tts.shutdown();
-        }
-        if (speechRecognizer != null) {
-            speechRecognizer.destroy();
         }
     }
 }
